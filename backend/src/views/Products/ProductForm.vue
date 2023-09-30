@@ -13,7 +13,7 @@
         <div class="col-span-1 sm:col-span-2 order-2 md:order-1 ">
           <CustomInput class="mb-2" v-model="product.title" label="Product Title"/>
           <CustomInput type="richtext" class="mb-2" v-model="product.description" label="Description"/>
-          <CustomInput type="number" class="mb-2" v-model="product.price" label="Price" prepend="$"/>
+          <CustomInput type="number" class="mb-2" v-model="product.price" label="Price" prepend="Ksh"/>
           <CustomInput type="number" class="mb-2" v-model="product.quantity" label="Quantity"/>
           <CustomInput type="checkbox" class="mb-2" v-model="product.published" label="Published"/>
         </div>

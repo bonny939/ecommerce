@@ -57,7 +57,7 @@
       </tr>
       </tbody>
       <tbody v-else>
-      <tr v-for="(product, index) of products.data">
+      <tr v-for="(product, index) in products.data">
         <td class="border-b p-2 ">{{ product.id }}</td>
         <td class="border-b p-2 ">
           <img v-if="product.image_url" class="w-16 h-16 object-cover" :src="product.image_url" :alt="product.title" />

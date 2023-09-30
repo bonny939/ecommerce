@@ -8,6 +8,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@casl/ability": "^6.5.0",
+    "@casl/vue": "^2.2.1",
     "@ckeditor/ckeditor5-build-classic": "^39.0.1",
     "@ckeditor/ckeditor5-vue": "^5.1.0",
     "axios": "^0.27.2",

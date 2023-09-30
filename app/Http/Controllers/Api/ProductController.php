@@ -28,7 +28,7 @@ class ProductController extends Controller
         $sortField = request('sort_field', 'created_at');
         $sortDirection = request('sort_direction', 'desc');
 
-        $query = Product::query()
+        $query = Product::query()->with(['images'])
             ->where('title', 'like', "%{$search}%")
             ->orderBy($sortField, $sortDirection)
             ->paginate($perPage);
