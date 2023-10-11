@@ -94,32 +94,37 @@
 </template>
 
 <script setup>
-import {ref} from 'vue'
+import {ref,onMounted} from 'vue'
 import {LockClosedIcon} from '@heroicons/vue/solid'
 import GuestLayout from "../components/GuestLayout.vue";
 import store from "../store";
+import { useAuthStore } from '../store/auth';
 import router from "../router";
 
 let loading = ref(false);
 let errorMsg = ref("");
-
+const { getUser } = useAuthStore();
 const user = {
   email: '',
   password: '',
   remember: false
 }
 
-function login() {
+async function login() {
   loading.value = true;
-  store.dispatch('login', user)
-    .then(() => {
-      loading.value = false;
-      router.push({name: 'app.dashboard'})
-    })
-    .catch(({response}) => {
-      loading.value = false;
-      errorMsg.value = response.data.message;
-    })
+
+  try {
+    store.dispatch('login', user)
+    localStorage.setItem("auth", true);
+    await  getUser();
+    router.push({name: 'app.dashboard'})
+  } catch ({ response: { data } }) {
+    loading.value = false;
+      errorMsg.value = data.message;
+
+  } finally {
+    loading.value = false;
+  }
 }
 
 </script>

@@ -1,34 +1,44 @@
+import { defineStore } from "pinia";
+import ability from "../services/ability";
+import axios from "axios";
 
-import { createStore } from "vuex";
-
-const authStore = createStore({
-  state: {
-    user: null,
-    isAuthenticated: false,
-  },
-  mutations: {
-    setUser(state, user) {
-      state.user = user;
-      state.isAuthenticated = Boolean(user);
-    },
-    clearUser(state) {
-      state.user = null;
-      state.isAuthenticated = false;
-    },
+export const useAuthStore = defineStore("auth", {
+  state: () => ({
+    authUser: JSON.parse(localStorage.getItem("user")),
+    token: localStorage.getItem("auth") || false
+  }),
+  getters: {
+    authenticated: (state) => !!state.token,
+    user: (state) => state.authUser
   },
   actions: {
-    login({ commit }, user) {
-      // Perform your login logic here, and once authenticated, commit the user to the state
-      commit("setUser", user);
+    async getToken() {
+      await axios.get("sanctum/");
     },
-    logout({ commit }) {
-      // Perform your logout logic here, and then clear the user from the state
-      commit("clearUser");
-    },
-  },
-  getters: {
-    // Add any getters you may need
-  },
-});
+    async getUser() {
+      try {
+        const data = await axios.get("api/getuser");
 
-export default authStore;
+        console.log("Response data:", response.data);
+        const userAbility = data.ability;
+
+  
+        this.authUser = data.data;
+        this.token = true;
+        localStorage.setItem("user", JSON.stringify(data.data));
+        ability.update([{ action: userAbility, subject: "all" }]);
+      } catch (error) {
+        console.error("Error while fetching user data:", error);
+      }
+    },
+
+    async logout() {
+      ability.update([]);
+      this.token = false;
+      this.authUser = null;
+      localStorage.removeItem("auth");
+      localStorage.removeItem("user");
+      await axios.post("/api/logout");
+    }
+  }
+});

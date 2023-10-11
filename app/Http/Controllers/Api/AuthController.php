@@ -24,24 +24,14 @@ class AuthController extends Controller
             ], 422);
         }
 
-        /** @var \App\Models\User $user */
-        $user = Auth::user();
-        if (!$user->is_admin) {
-            Auth::logout();
-            return response([
-                'message' => 'You don\'t have permission to authenticate as admin'
-            ], 403);
-        }
-        if (!$user->email_verified_at) {
-            Auth::logout();
-            return response([
-                'message' => 'Your email address is not verified'
-            ], 403);
-        }
+        /** @var \App\Models\Api\User $user */
+        $user = auth()->user();
+
         $token = $user->createToken('main')->plainTextToken;
         return response([
             'user' => new UserResource($user),
-            'token' => $token
+            'token' => $token,
+            $user->append('ability')
         ]);
 
     }

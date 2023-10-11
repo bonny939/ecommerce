@@ -89,4 +89,12 @@ class UserController extends Controller
 
         return response()->noContent();
     }
+    public function getAuthenticatedUser()
+    {
+
+        $user = auth()->user();
+
+        return response()->json($user->append('ability'));
+
+    }
 }

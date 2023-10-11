@@ -67,13 +67,13 @@
       </template>
       <Spinner v-else text="" class=""/>
     </div>
-    <div class="bg-white py-6 px-5 rounded-lg shadow flex flex-col items-center justify-center">
+    <!-- <div class="bg-white py-6 px-5 rounded-lg shadow flex flex-col items-center justify-center">
       <label class="text-lg font-semibold block mb-2">Orders by Country</label>
       <template v-if="!loading.ordersByCountry">
         <DoughnutChart :width="140" :height="200" :data="ordersByCountry"/>
       </template>
       <Spinner v-else text="" class=""/>
-    </div>
+    </div> -->
     <div class="bg-white py-6 px-5 rounded-lg shadow">
       <label class="text-lg font-semibold block mb-2">Latest Customers</label>
       <template v-if="!loading.latestCustomers">
@@ -150,7 +150,7 @@ function updateDashboard() {
   axiosClient.get(`/dashboard/income-amount`, {params: {d}}).then(({data}) => {
     totalIncome.value = new Intl.NumberFormat('en-US', {
       style: 'currency',
-      currency: 'USD',
+      currency: 'Ksh',
       minimumFractionDigits: 0
     })
       .format(data);

@@ -1,25 +1,18 @@
 <script setup>
 import ability from "./services/ability";
-import { onMounted, computed } from "vue";
-import authStore from "./store/auth";
+import { onMounted } from "vue";
+import { useAuthStore } from "./store/auth";
+import { storeToRefs } from "pinia";
 
-const store = authStore;
+const { authenticated, user } = storeToRefs(useAuthStore());
 
-// Function to load abilities
 function loadAbilities() {
-  const user = store.state.user;
-
-  if (user) {
-    ability.update([{ action: user.ability, subject: "all" }]);
-  }
+  if (!authenticated.value) return;
+  ability.update([{ action: user.ability, subject: "all" }]);
 }
 
-// Call loadAbilities when the component is mounted
 onMounted(() => {
-  // Check if the user is authenticated before loading abilities
-  if (store.state.isAuthenticated) {
-    loadAbilities();
-  }
+  loadAbilities();
 });
 </script>
 
