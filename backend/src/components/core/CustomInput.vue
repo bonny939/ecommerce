@@ -11,6 +11,7 @@
                 :required="required"
                 :value="props.modelValue"
                 :class="inputClasses"
+                :placeholder="label"
                 @change="onChange($event.target.value)">
           <option v-for="option of selectOptions" :value="option.key">{{ option.text }}</option>
         </select>

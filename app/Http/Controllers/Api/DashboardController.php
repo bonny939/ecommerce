@@ -85,8 +85,8 @@ class DashboardController extends Controller
 
     public function latestOrders()
     {
-        return OrderResource::collection(
-            Order::query()
+        try {
+            $orders = Order::query()
                 ->select(['o.id', 'o.total_price', 'o.created_at', DB::raw('COUNT(oi.id) AS items'),
                     'c.user_id', 'c.first_name', 'c.last_name'])
                 ->from('orders AS o')
@@ -96,7 +96,15 @@ class DashboardController extends Controller
                 ->limit(10)
                 ->orderBy('o.created_at', 'desc')
                 ->groupBy('o.id', 'o.total_price', 'o.created_at', 'c.user_id', 'c.first_name', 'c.last_name')
-                ->get()
-        );
+                ->get();
+
+            return OrderResource::collection($orders);
+        } catch (QueryException $e) {
+            // Log the query error for debugging
+            \Log::error('Query Error: ' . $e->getMessage());
+
+            // Handle the error, e.g., return an error response
+            return response()->json(['message' => 'Error fetching latest orders'], 500);
+        }
     }
 }

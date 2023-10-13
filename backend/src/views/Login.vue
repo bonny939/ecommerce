@@ -98,7 +98,7 @@ import {ref,onMounted} from 'vue'
 import {LockClosedIcon} from '@heroicons/vue/solid'
 import GuestLayout from "../components/GuestLayout.vue";
 import store from "../store";
-import { useAuthStore } from '../store/auth';
+import { useAuthStore } from '../stores/auth';
 import router from "../router";
 
 let loading = ref(false);
@@ -112,11 +112,10 @@ const user = {
 
 async function login() {
   loading.value = true;
-
   try {
     store.dispatch('login', user)
     localStorage.setItem("auth", true);
-    await  getUser();
+    // await  getUser();
     router.push({name: 'app.dashboard'})
   } catch ({ response: { data } }) {
     loading.value = false;

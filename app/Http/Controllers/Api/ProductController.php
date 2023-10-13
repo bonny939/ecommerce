@@ -108,28 +108,29 @@ class ProductController extends Controller
 
 
     private function saveImages($images, Product $product)
-    {
-        foreach ($images as $i => $image) {
-            $path = 'images/' . Str::random();
-            if (!Storage::exists($path)) {
-                Storage::makeDirectory($path);
-            }
-            if (!Storage::putFileAS('public/' . $path, $image, $image->getClientOriginalName())) {
-                throw new \Exception("Unable to save file \"{$image->getClientOriginalName()}\"");
-            }
-
-            $relativePath = $path . '/' . $image->getClientOriginalName();
-
-            ProductImage::create([
-                'product_id' => $product->id,
-                'path' => $relativePath,
-                'url' => URL::to(Storage::url($relativePath)),
-                'mime' => $image->getClientMimeType(),
-                'size' => $image->getSize(),
-                'position' => $i + 1
-            ]);
+{
+    foreach ($images as $i => $image) {
+        $path = 'images/' . Str::random();
+        if (!Storage::exists($path)) {
+            Storage::makeDirectory($path);
         }
+        if (!Storage::putFileAs('public/' . $path, $image, $image->getClientOriginalName())) {
+            throw new \Exception("Unable to save file \"{$image->getClientOriginalName()}");
+        }
+
+        $relativePath = $path . '/' . $image->getClientOriginalName();
+        $imageURL = asset('storage/' . $relativePath);
+
+        ProductImage::create([
+            'product_id' => $product->id,
+            'path' => $relativePath,
+            'url' => $imageURL,
+            'mime' => $image->getClientMimeType(),
+            'size' => $image->getSize(),
+            'position' => $i + 1
+        ]);
     }
+}
 
     public function deleteImages($imageIds, Product $product)
     {

@@ -174,6 +174,7 @@ import TableHeaderCell from "../../components/core/Table/TableHeaderCell.vue";
 import {Menu, MenuButton, MenuItem, MenuItems} from "@headlessui/vue";
 import {DotsVerticalIcon, PencilIcon, TrashIcon} from '@heroicons/vue/outline'
 import UserModal from "./UserModal.vue";
+import axiosClient from "../../axios";
 
 const perPage = ref(USERS_PER_PAGE);
 const search = ref('');
@@ -189,6 +190,7 @@ const emit = defineEmits(['clickEdit'])
 onMounted(() => {
   getUsers();
 })
+
 
 function getForPage(ev, link) {
   ev.preventDefault();
@@ -242,6 +244,7 @@ function deleteUser(user) {
 function editUser(p) {
   emit('clickEdit', p)
 }
+
 </script>
 
 <style scoped>

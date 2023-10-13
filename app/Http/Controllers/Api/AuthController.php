@@ -31,7 +31,6 @@ class AuthController extends Controller
         return response([
             'user' => new UserResource($user),
             'token' => $token,
-            $user->append('ability')
         ]);
 
     }

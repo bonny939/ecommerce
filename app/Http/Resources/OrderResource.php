@@ -19,8 +19,11 @@ class OrderResource extends JsonResource
     public function toArray($request)
     {
         $customer = $this->user->customer;
+
+        // Check if shipping and billing addresses are not null
         $shipping = $customer->shippingAddress;
         $billing = $customer->billingAddress;
+
 
         return [
             'id' => $this->id,
@@ -43,24 +46,6 @@ class OrderResource extends JsonResource
                 'first_name' => $customer->first_name,
                 'last_name' => $customer->last_name,
                 'phone' => $customer->phone,
-                'shippingAddress' => [
-                    'id' => $shipping->id,
-                    'address1' => $shipping->address1,
-                    'address2' => $shipping->address2,
-                    'city' => $shipping->city,
-                    'state' => $shipping->state,
-                    'zipcode' => $shipping->zipcode,
-                    'country' => $shipping->country->name,
-                ],
-                'billingAddress' => [
-                    'id' => $billing->id,
-                    'address1' => $billing->address1,
-                    'address2' => $billing->address2,
-                    'city' => $billing->city,
-                    'state' => $billing->state,
-                    'zipcode' => $billing->zipcode,
-                    'country' => $billing->country->name,
-                ]
             ],
             'created_at' => (new \DateTime($this->created_at))->format('Y-m-d H:i:s'),
             'updated_at' => (new \DateTime($this->updated_at))->format('Y-m-d H:i:s'),

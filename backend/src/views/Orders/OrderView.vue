@@ -27,7 +27,7 @@
         </tr>
         <tr>
           <td class="font-bold py-1 px-2">SubTotal</td>
-          <td>{{ $filters.currencyUSD(order.total_price) }}</td>
+          <td>{{ $filters.currencyKSH(order.total_price) }}</td>
         </tr>
         </tbody>
       </table>
@@ -54,34 +54,7 @@
         </tbody>
       </table>
     </div>
-    <!--/  Customer Details-->
-
-    <!--  Addresses Details-->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-      <div>
-        <h2 class="text-xl font-semibold mt-6 pb-2 border-b border-gray-300">Billing Address</h2>
-        <!--  Billing Address Details-->
-        <div>
-          {{ order.customer.billingAddress.address1 }}, {{ order.customer.billingAddress.address2 }} <br>
-          {{ order.customer.billingAddress.city }}, {{ order.customer.billingAddress.zipcode }} <br>
-          {{ order.customer.billingAddress.state }}, {{ order.customer.billingAddress.country }} <br>
-        </div>
-        <!--/  Billing Address Details-->
-      </div>
-      <div>
-        <h2 class="text-xl font-semibold mt-6 pb-2 border-b border-gray-300">Shipping Address</h2>
-        <!--  Shipping Address Details-->
-        <div>
-          {{ order.customer.shippingAddress.address1 }}, {{ order.customer.shippingAddress.address2 }} <br>
-          {{ order.customer.shippingAddress.city }}, {{ order.customer.shippingAddress.zipcode }} <br>
-          {{ order.customer.shippingAddress.state }}, {{ order.customer.shippingAddress.country }} <br>
-        </div>
-        <!--/  Shipping Address Details-->
-      </div>
-    </div>
-    <!--/  Customer Details-->
-
-    <!--    Order Items-->
+  
     <div>
       <h2 class="text-xl font-semibold mt-6 pb-2 border-b border-gray-300">Order Items</h2>
       <div v-for="item of order.items">
@@ -99,7 +72,7 @@
             </div>
             <div class="flex justify-between items-center">
               <div class="flex items-center">Qty: {{ item.quantity }}</div>
-              <span class="text-lg font-semibold"> {{ $filters.currencyUSD(item.unit_price) }} </span>
+              <span class="text-lg font-semibold"> {{ $filters.currencyKSH(item.unit_price) }} </span>
             </div>
           </div>
         </div>

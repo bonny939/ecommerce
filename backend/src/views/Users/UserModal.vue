@@ -47,6 +47,13 @@
                 <div class="bg-white px-4 pt-5 pb-4">
                   <CustomInput class="mb-2" v-model="user.name" label="Name"/>
                   <CustomInput class="mb-2" v-model="user.email" label="Email"/>
+                  <select
+                :value="props.modelValue"
+                :class="inputClasses"
+                placeholder="Role"
+                @change="onChange($event.target.value)">
+          <option v-for="option of roles" :value="option.key">{{ option.text }}</option>
+        </select>
                   <CustomInput type="password" class="mb-2" v-model="user.password" label="Password"/>
                 </div>
                 <footer class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
@@ -71,9 +78,9 @@
 </template>
 
 <script setup>
-import {computed, onUpdated, ref} from 'vue'
+import {computed, onUpdated, ref,onMounted} from 'vue'
 import {Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot} from '@headlessui/vue'
-import {ExclamationIcon} from '@heroicons/vue/outline'
+import axiosClient from "../../axios";
 import CustomInput from "../../components/core/CustomInput.vue";
 import store from "../../store/index.js";
 import Spinner from "../../components/core/Spinner.vue";
@@ -81,6 +88,7 @@ import Spinner from "../../components/core/Spinner.vue";
 const user = ref({
   id: props.user.id,
   name: props.user.name,
+  role:props.user.role,
   email: props.user.email,
 })
 
@@ -93,6 +101,9 @@ const props = defineProps({
     type: Object,
   }
 })
+function getRoles(){
+  const roles =  axiosClient.get('roles')
+}
 
 const emit = defineEmits(['update:modelValue', 'close'])
 
@@ -142,4 +153,24 @@ function onSubmit() {
       })
   }
 }
+onMounted(() => {
+  getRoles();
+})
+const inputClasses = computed(() => {
+  const cls = [
+    `block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`,
+  ];
+
+  if (props.append && !props.prepend) {
+    cls.push(`rounded-l-md`)
+  } else if (props.prepend && !props.append) {
+    cls.push(`rounded-r-md`)
+  } else if (!props.prepend && !props.append) {
+    cls.push('rounded-md')
+  }
+  if (props.errors && props.errors[0]) {
+    cls.push('border-red-600 focus:border-red-600')
+  }
+  return cls.join(' ')
+})
 </script>
