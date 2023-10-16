@@ -1,7 +1,7 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <template>
-  <div class="relative">
-    <div class="flex items-center justify-between mb-3">
+  <div class="relative" >
+    <div class="flex items-center justify-between mb-3" v-if="$can('create-products')">
       <h1 class="text-3xl font-semibold">{{
           product.id ? `Update product: "${product.title}"` : 'Create new Product'
         }}</h1>

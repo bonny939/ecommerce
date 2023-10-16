@@ -7,12 +7,20 @@ import { storeToRefs } from "pinia";
 const { authenticated, user } = storeToRefs(useAuthStore());
 function loadAbilities() {
   if (!authenticated.value) return;
-  ability.update([{ action: user.ability, subject: "all" }]);
+  const userAbilities = localStorage.getItem("user");
+  if (userAbilities) {
+    const parsedUser = JSON.parse(userAbilities);
+    if (parsedUser.ability) {
+      ability.update([{ action: parsedUser.ability, subject: "all" }]);
+    }
+    return parsedUser;
+  }
 }
-
 
 onMounted(() => {
   loadAbilities();
+  console.log(loadAbilities());
+
 });
 </script>
 

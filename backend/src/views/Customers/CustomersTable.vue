@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white p-4 rounded-lg shadow animate-fade-in-down">
+  <div   v-if="$can('view-customers')" class="bg-white p-4 rounded-lg shadow animate-fade-in-down">
     <div class="flex justify-between border-b-2 pb-3">
       <div class="flex items-center">
         <span class="whitespace-nowrap mr-3">Per Page</span>
@@ -187,6 +187,7 @@ import {CUSTOMERS_PER_PAGE} from "../../constants";
 import TableHeaderCell from "../../components/core/Table/TableHeaderCell.vue";
 import {Menu, MenuButton, MenuItem, MenuItems} from "@headlessui/vue";
 import {DotsVerticalIcon, PencilIcon, TrashIcon} from '@heroicons/vue/outline'
+import ability from "../../services/ability";
 
 const perPage = ref(CUSTOMERS_PER_PAGE);
 const search = ref('');

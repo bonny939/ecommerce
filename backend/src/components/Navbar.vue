@@ -43,7 +43,7 @@
             </MenuItem>
             <MenuItem v-slot="{ active }">
               <button
-                @click="logout"
+                @click="logMeOut"
                 :class="[
                   active ? 'bg-indigo-600 text-white' : 'text-gray-900',
                   'group flex w-full items-center rounded-md px-2 py-2 text-sm',
@@ -71,16 +71,16 @@ import {ChevronDownIcon} from '@heroicons/vue/solid'
 import store from "../store";
 import router from "../router";
 import {computed} from "vue";
+import { useAuthStore } from '../stores/auth';
 
 const emit = defineEmits(['toggle-sidebar'])
 
 const currentUser = computed(() => store.state.user.data);
+const {logout} = useAuthStore();
 
-function logout() {
-  store.dispatch('logout')
-    .then(() => {
+function logMeOut() {
+   logout();
       router.push({name: 'login'})
-    })
 }
 
 </script>

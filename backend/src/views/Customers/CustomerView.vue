@@ -1,5 +1,6 @@
 <template>
-  <div v-if="customer.id" class="animate-fade-in-down">
+  <div v-if="$can('view-customers')">
+      <div v-if="customer.id" class="animate-fade-in-down">
     <form @submit.prevent="onSubmit">
       <div class="bg-white px-4 pt-5 pb-4">
         <h1 class="text-2xl font-semibold pb-2">{{ title }}</h1>
@@ -67,6 +68,7 @@
       </footer>
     </form>
 
+  </div>
   </div>
 </template>
 

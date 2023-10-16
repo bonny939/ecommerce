@@ -1,5 +1,5 @@
 <template>
-  <BarChart :data="chartData" :height="240"/>
+  <BarChart :data="chartData" :height="240" v-if="$can('view-reports')"/>
 </template>
 
 <script setup>

@@ -13,26 +13,18 @@ class AssignRolesSeeder extends Seeder
      * Run the database seeds.
      */
     public function run(): void
-    {$users = User::all();
+    {
+        $users = User::take(3)->get(); // Get the first three users
+        $roles = \Spatie\Permission\Models\Role::all();
 
-        $roles = [
-            'System Administrator',
-            'Manager',
-            'Server',
-        ];
-
-        foreach ($users as $index => $user) {
-            if ($user->getRoleNames()->count() > 0) {
+        if ($users->count() > 0 && $roles->count() > 0) {
+            foreach ($users as $user) {
+                // Assign roles to each of the first three users
+                foreach ($roles as $role) {
+                    $user->assignRole($role);
+                }
             }
 
-            $role = Role::where('name', $roles[$index])->first();
-
-            if ($role) {
-                $user->assignRole($role);
-            }
         }
-
-
-
     }
 }

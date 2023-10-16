@@ -100,6 +100,8 @@ import GuestLayout from "../components/GuestLayout.vue";
 import store from "../store";
 import { useAuthStore } from '../stores/auth';
 import router from "../router";
+import axiosClient from '../axios';
+import ability from "../services/ability";
 
 let loading = ref(false);
 let errorMsg = ref("");
@@ -113,17 +115,24 @@ const user = {
 async function login() {
   loading.value = true;
   try {
-    store.dispatch('login', user)
-    localStorage.setItem("auth", true);
-    // await  getUser();
-    router.push({name: 'app.dashboard'})
-  } catch ({ response: { data } }) {
-    loading.value = false;
-      errorMsg.value = data.message;
+    const response = await axiosClient.post("/login", {
+      email: user.email,
+      password: user.password
+    });
 
+    const token = response.data.token;
+    sessionStorage.setItem('TOKEN',token);
+    localStorage.setItem("auth", true);
+    localStorage.setItem("user", JSON.stringify(response.data.user));
+    ability.update([{ action: response.data.user.ability, subject: "all" }]);
+    router.push({ name: 'app.dashboard' });
+  } catch (response) {
+    loading.value = false;
+    errorMsg.value = response.message;
   } finally {
     loading.value = false;
   }
 }
+
 
 </script>

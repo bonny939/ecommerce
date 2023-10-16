@@ -28,13 +28,13 @@ class GrantAccessSeeder extends Seeder
                 $permissions = [];
 
                 if ($role->name === 'System Administrator') {
-                    // Assign all permissions
+
                     $permissions = \Spatie\Permission\Models\Permission::all()->pluck('name');
                 } elseif ($role->name === 'Manager') {
-                    // Assign all permissions except 'create-system-users'
+
                     $permissions = \Spatie\Permission\Models\Permission::where('name', '!=', 'create-system-users')->pluck('name');
                 } elseif ($role->name === 'Server') {
-                    // Assign only 'view-reports' permission
+
                     $permissions = ['view-orders'];
                 }
 

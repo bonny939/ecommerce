@@ -20,9 +20,6 @@ class OrderResource extends JsonResource
     {
         $customer = $this->user->customer;
 
-        // Check if shipping and billing addresses are not null
-        $shipping = $customer->shippingAddress;
-        $billing = $customer->billingAddress;
 
 
         return [

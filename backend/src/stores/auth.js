@@ -13,7 +13,9 @@ export const useAuthStore = defineStore("auth", {
     user: (state) => state.authUser
   },
   actions: {
-
+    async getToken() {
+      await axios.get("TOKEN");
+    },
     async getUser() {
       const data = await axiosClient.get("getuser");
       this.authUser = data.data;
@@ -23,11 +25,11 @@ export const useAuthStore = defineStore("auth", {
 
     async logout() {
       ability.update([]);
-      this.token = false;
+      sessionStorage.removeItem('TOKEN')
       this.authUser = null;
-      sessionStorage.removeItem("auth");
+      localStorage.removeItem("auth");
       localStorage.removeItem("user");
-      await axios.post("/logout");
+      await axiosClient.post("/logout");
     }
   }
 });

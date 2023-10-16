@@ -1,4 +1,5 @@
 <template>
+  <div v-if="$can('view-orders')">
   <div v-if="order">
 
     <!--  Order Details-->
@@ -54,7 +55,7 @@
         </tbody>
       </table>
     </div>
-  
+
     <div>
       <h2 class="text-xl font-semibold mt-6 pb-2 border-b border-gray-300">Order Items</h2>
       <div v-for="item of order.items">
@@ -82,6 +83,7 @@
     </div>
     <!--/    Order Items-->
 
+  </div>
   </div>
 </template>
 

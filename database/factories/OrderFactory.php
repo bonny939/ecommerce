@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\OrderStatus;
+use DB;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
 
@@ -22,10 +23,10 @@ class OrderFactory extends Factory
             return [
                 'status' => $this->faker->randomElement(OrderStatus::getStatuses()),
                 'total_price' => $this->faker->randomFloat(2, 10, 1000),
-                'created_by' => 1, // You can set the created_by user ID here
-                'updated_by' => 1, // You can set the updated_by user ID here
+                'created_by' => DB::table("customers")->inRandomOrder()->first()->user_id,
+                // 'updated_by' => null,
                 'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
+                // 'updated_at' => Carbon::now(),
             ];
 
     }

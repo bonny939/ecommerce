@@ -21,6 +21,8 @@ export function logout({commit}) {
   return axiosClient.post('/logout')
     .then((response) => {
       commit('setToken', null)
+      localStorage.removeItem("auth");
+      localStorage.removeItem("user");
 
       return response;
     })

@@ -18,41 +18,25 @@ class AdminUserSeeder extends Seeder
      */
     public function run()
     {
-          // Create roles if they don't exist
-          $roles = ['System Administrator', 'Manager', 'Server'];
-          foreach ($roles as $roleName) {
-              $role = Role::firstOrNew(['name' => $roleName]);
-              if (!$role->exists) {
-                  $role->save();
-              }
-          }
 
-          // Create users and assign roles
           User::create([
               'name' => 'Admin',
               'email' => 'admin@example.com',
               'password' => bcrypt('admin123'),
               'email_verified_at' => now(),
-          ])->assignRole('System Administrator');
+          ]);
 
           User::create([
               'name' => 'Joshua',
               'email' => 'manager@gmail.com',
               'password' => bcrypt('bonny123'),
               'email_verified_at' => now(),
-          ])->assignRole('Manager');
+          ]);
         User::create([
             'name' => 'Jatelo',
             'email' => 'josh@gmail.com',
             'password' => bcrypt('bonny123'),
             'email_verified_at' => now(),
-        ])->assignRole('Server');
-
-        Customer::create([
-            'first_name' => 'Bonito',
-            'last_name' => 'bonface@gmail.com',
-            'phone' => "0795548900",
-            'status' => 'active',
         ]);
     }
 }
