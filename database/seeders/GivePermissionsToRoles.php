@@ -12,7 +12,7 @@ class GivePermissionsToRoles extends Seeder
      * Run the database seeds.
      */
     public function run(): void
-    {   
+    {
         $roles = \Spatie\Permission\Models\Role::all();
         $admin = Role::where('name', 'System Adminstrator')->first();
         $permissionsForAdmin = [
@@ -37,8 +37,6 @@ class GivePermissionsToRoles extends Seeder
         $admin->syncPermissions($permissionsForAdmin);
         $permissionsForManager = [
             'view-system-users',
-            'delete-system-users',
-            'update-system-users',
             'create-products',
             'view-products',
             'delete-products',

@@ -39,7 +39,7 @@
                          @click="sortUsers('created_at')">
           Create Date
         </TableHeaderCell>
-        <TableHeaderCell field="actions">
+        <TableHeaderCell field="actions" v-if="$can('create-system-users')">
           Actions
         </TableHeaderCell>
       </tr>
@@ -90,7 +90,7 @@
                 class="absolute z-10 right-0 mt-2 w-32 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
               >
                 <div class="px-1 py-1">
-                  <MenuItem v-slot="{ active }">
+                  <MenuItem v-slot="{ active }" v-if="$can('update-system-users')">
                     <button
                       :class="[
                         active ? 'bg-indigo-600 text-white' : 'text-gray-900',
@@ -106,7 +106,7 @@
                       Edit
                     </button>
                   </MenuItem>
-                  <MenuItem v-slot="{ active }">
+                  <MenuItem v-slot="{ active }" v-if="$can('delete-system-users')">
                     <button
                       :class="[
                         active ? 'bg-indigo-600 text-white' : 'text-gray-900',
