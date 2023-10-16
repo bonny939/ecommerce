@@ -69,7 +69,7 @@
         <td class="border-b p-2 ">
           <Menu as="div" class="relative inline-block text-left">
             <div>
-              <MenuButton
+              <MenuButton v-if="$can('create-system-users')"
                 class="inline-flex items-center justify-center w-full justify-center rounded-full w-10 h-10 bg-black bg-opacity-0 text-sm font-medium text-white hover:bg-opacity-5 focus:bg-opacity-5 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
               >
                 <DotsVerticalIcon
