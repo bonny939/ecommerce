@@ -27,15 +27,15 @@ class AdminUserSeeder extends Seeder
           ]);
 
           User::create([
-              'name' => 'Joshua',
+              'name' => 'Joshua Ngomi',
               'email' => 'manager@gmail.com',
-              'password' => bcrypt('bonny123'),
+              'password' => bcrypt('passworded'),
               'email_verified_at' => now(),
           ]);
         User::create([
-            'name' => 'Jatelo',
-            'email' => 'josh@gmail.com',
-            'password' => bcrypt('bonny123'),
+            'name' => 'Cafeteria Server',
+            'email' => 'server@cafeteria.com',
+            'password' => bcrypt('passworded'),
             'email_verified_at' => now(),
         ]);
     }
